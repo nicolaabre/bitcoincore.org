@@ -17,7 +17,11 @@
 set -e ## Exit on unexpected false return
 set -u ## Exit on call of unitintialized variable
 
-grep 'class="dl"' _site/en/download/index.html | sed 's/.*href="//; s/".*//' | while read url
+## TODO: verification of win32 links for 0.18.0 release are disabled
+##       so that the files can be omited from the server in order to
+##       gauge demand for them.  Re-evaluate this situation for future
+##       releases
+grep 'class="dl"' _site/en/download/index.html | egrep -v 'win32(exe|zip)' | sed 's/.*href="//; s/".*//' | while read url
 do
   ## Handle relative and absolute URLs differently
   if [ "${url##http*}" ]
